@@ -1,0 +1,220 @@
+\documentclass[11pt,a4paper]{ltjsarticle}
+% 画像
+\usepackage{graphicx}
+% 表
+\usepackage{booktabs}
+% 数式
+\usepackage{amsmath}
+% 単位
+\usepackage{siunitx}
+% ベクトル
+\usepackage{bm}
+% コード
+\usepackage{listings,jvlisting}
+% 論理記号のため
+\usepackage{amssymb}
+% リンク
+\usepackage{hyperref}
+
+% タイトルのカスタマイズ
+\usepackage{titling}
+\title{実験レポート}
+\date{}
+\author{作成者：山下倫宏
+\\ 学籍番号 : 03230524
+\\ 共同実験者 : 杉山月渚 渡辺健太 高橋一郎
+\\ 実験日 : 2023年月日
+\\ 作成日：\today}
+\preauthor{\begin{flushright}}
+\postauthor{\end{flushright}}
+
+% 変数の定義
+\newcommand{\one}{\num{9e3}}
+\newcommand{\two}{\num{1e2}}
+
+\begin{document}
+
+\maketitle
+
+\section{考察課題}
+\subsection{測定レンジと内部抵抗}
+実験テキスト\cite{text}の図A1.14(a)より、
+電流計は指示計器にかかる電圧に比例して電流値を示すことが分かる。
+電流計に流れる電流が一定で測定レンジだけ変化させた場合、測定レンジが大きいほど接続する内部抵抗が
+小さくなる必要があることが分かる。
+また、電流計の内部抵抗が電流に及ぼす影響を極力小さくするために、
+電流計の内部抵抗は小さい値になっていると推測される。
+
+実験テキスト\cite{text}の図A1.14(b)より、
+電圧計は指示計器に流れる電流に比例した電圧値を示すことが分かる。
+電圧計にかかる電圧が一定で測定レンジだけ変化させた場合、測定レンジが大きいほど
+接続する内部抵抗のコンダクタンスが小さくなる必要があることが分かる。
+つまり測定レンジが大きいほど、抵抗値は大きくなる必要がある。
+また、電流計流れる電流によって生じる電位差の影響を極力小さくするために、
+電圧計の内部抵抗は大きな値になっていると推測される。
+
+また、実際に電圧計と電流計の内部抵抗を計測した結果を
+以下の表\ref{table:resistanceVolt}、
+表\ref{table:resistancemicroAmpere}
+と表\ref{table:resistancemilliAmpere}にに示す。
+\begin{table}[tb]
+  \begin{tabular}{cc}
+    \begin{minipage}[t]{0.45\hsize}
+      \caption{電圧計の内部抵抗の測定結果}
+      \label{table:resistanceVolt}
+      \centering
+      \begin{tabular}{@{ }cc@{ }} \toprule
+          最大目盛り値 [$\si{\volt}$] & 内部抵抗 [\si{k\ohm}] \\ \midrule
+          0.3 & 3.00 \\
+          1 & 10.00 \\
+          3 & 30.00 \\
+          10 & 100.00 \\
+          30 & 300.00 \\
+          \bottomrule
+      \end{tabular}
+    \end{minipage}
+    &
+    \begin{minipage}[t]{0.45\hsize}
+      \caption{電流計($\si{\micro\ampere}$)の内部抵抗の測定結果}
+      \label{table:resistancemicroAmpere}
+      \centering
+      \begin{tabular}{@{ }cc@{ }} \toprule
+        最大目盛り値 [$\si{\micro\ampere}$] & 内部抵抗 [\si{k\ohm}] \\ \midrule
+        30 & 4.69 \\
+        100 & 6.75 \\
+        300 & 2.75 \\
+        1000 & 0.88 \\
+        3000 & 0.30 \\
+        \bottomrule
+      \end{tabular}
+    \end{minipage}
+    \\
+    \begin{minipage}[t]{0.45\hsize}
+      \caption{電流計($\si{\milli\ampere}$)の内部抵抗の測定結果}
+      \label{table:resistancemilliAmpere}
+      \centering
+      \begin{tabular}{@{ }cc@{ }} \toprule
+        最大目盛り値 [$\si{\milli\ampere}$] & 内部抵抗 [\si{\ohm}] \\ \midrule
+        10 & 4.50 \\
+        30 & 1.70 \\
+        100 & 0.58 \\
+        300 & 0.35 \\
+        1000 & 0.15 \\
+        \bottomrule
+      \end{tabular}
+    \end{minipage}
+  \end{tabular}
+\end{table}
+表\ref{table:resistanceVolt}より、
+電圧計の内部抵抗は測定レンジが大きいほど大きくなっていることが分かる。
+また内部抵抗の値も、表\ref{table:resistancemicroAmpere}と
+表\ref{table:resistancemilliAmpere}に示された電流計の値よりも
+大きくなっていることが分かる。これらの結果は先ほど示した推測が正しいことを裏付けている。
+
+また、表\ref{table:resistancemicroAmpere}と表\ref{table:resistancemilliAmpere}より、
+電流計の内部抵抗は測定レンジが大きいほど小さくなっていることが分かる。
+電流計($\si{\micro\ampere}$)と電流計($\si{\milli\ampere}$)の内部抵抗を比べてみても、
+測定レンジが$\num{e3}$だけ離れていると、
+内部抵抗もオーダーが$\num{e3}$だけ離れていることが分かる。
+
+内部抵抗を考慮した回路図を以下の図\ref{fig:circuit1}に示す。
+% 一枚の図
+\begin{figure}[tb]
+  \centering
+  \includegraphics[keepaspectratio,width=0.65\columnwidth]
+  {fig/fig2.jpg}
+  \caption[]{pn接合ダイオードのGS特性測定の回路図}
+  \label{fig:circuit1}
+\end{figure}
+図\ref{fig:circuit1}の回路図より、
+電圧計で計測される電圧は電流計での電圧降下を含んでいることが分かる。
+そのため、実測値からの電圧降下を考慮した電圧を計算する必要がある。
+実際に電圧計で測定される電圧$V$は以下の式\ref{eq:eq1}で、
+ゲート・ソース間の電圧$V_{GS}$に補正される。
+\begin{equation}
+  \label{eq:eq1}
+  V_{GS} = V - R_{A}I
+\end{equation}
+
+一方で、電流計で計測される電流は電圧計に分流されずに、そのままpn接合ダイオードに流れる。
+そのため計測される電流値は補正される必要がないと考えられる。
+
+以下に、pn接合ダイオードの電圧電流特性の測定結果を図\ref{fig:graph1}に示す。
+% 一枚の図
+\begin{figure}[tb]
+  \centering
+  \includegraphics[keepaspectratio,width=0.65\columnwidth]
+  {fig/fig3.png}
+  \caption[]{pn接合ダイオードの電圧電流特性}
+  \label{fig:graph1}
+\end{figure}
+図\ref{fig:graph1}では、横軸の電圧$V_{GS}$は線形目盛りであるが、
+縦軸の電流$I$は対数目盛りである。
+これは、電流が指数関数的に増加するためである。
+つまり理想としては、高電圧領域ではプロットが線形であることが望ましい。
+
+また、図\ref{fig:graph1}のグラフには、式\ref{eq:eq1}による補正前と
+補正後の結果の両方を表示した。
+式\ref{eq:eq1}における抵抗$R_{A}$
+の値は、表\ref{table:resistancemicroAmpere}と表\ref{table:resistancemilliAmpere}
+に示した値を使用した。
+
+図\ref{fig:graph1}より、補正前の測定値では$30\si{\micro\ampere}$、
+$1000\si{\micro\ampere}$と$10\si{\milli\ampere}$の電流計を用いたため、
+測定される電流の値に統一性が見られていない。
+しかし、式\ref{eq:eq1}による補正後の測定値では、
+測定レンジが異なる電流計を用いても、
+一つの曲線上に分布していることが分かる。
+図\ref{fig:graph1}に示した青色のプロットより、補正の妥当性が分かる。
+
+%測定系の限界についての議論
+図\ref{fig:graph1}より、$V_{GS} \le 0.7\si{\volt}$の範囲において、
+ソース・ゲート間電流$I_{GS}$が
+$1\si{\milli\ampere}$よりも小さくなり、
+$V_{GS} \le 0.5\si{\volt}$の範囲では、
+測定限界を迎えて、電流が測定できなくなっている。
+それも一つの測定系の限界に基づく不感帯であると考えられる。
+
+また、$V_{GS} \ge 0.7\si{\volt}$の範囲では、
+両軸を線形目盛でとり、さらに補正後の値のプロットに
+対して補助線を引いたものを図\ref{fig:graph2}に示す。
+% 一枚の図
+\begin{figure}[tb]
+  \centering
+  \includegraphics[keepaspectratio,width=0.65\columnwidth]
+  {fig/fig4.png}
+  \caption[]{高電圧領域でのプロット}
+  \label{fig:graph2}
+\end{figure}
+図\ref{fig:graph2}より、補助線の傾きは
+$$9.24\frac{\si{\milli\ampere}}{\si{\volt}}$$
+となり、これはpn接合ダイオードの抵抗が
+およそ
+$$\frac{1}{9.24\frac{\si{\milli\ampere}}{\si{\volt}}} = 108\si{\ohm}$$
+であることが分かる。
+ここで、表\ref{table:resistancemilliAmpere}より
+電流計($10\si{\milli\ampere}$)の内部抵抗は
+$R_{A} = 4.5\si{\ohm}$であるため、
+$4.5/108=0.0416 \ll 1$となり、
+電流計の内部抵抗は無視できるので、
+この領域には測定系に起因する誤差は生じていないと
+みなせる。
+
+
+\subsection{pn接合ダイオードの電圧電流特性}
+
+
+\subsection{FETの静特性}
+
+\subsection{ソース設置回路の電圧増幅率の周波数特性}
+
+\subsection{バイパスコンデンサの有無による増幅率の変化}
+
+\subsection{安定係数の導出}
+
+
+\bibliographystyle{junsrt}
+\bibliography{cite}
+
+
+\end{document}
