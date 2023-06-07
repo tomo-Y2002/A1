@@ -15,6 +15,8 @@
 \usepackage{amssymb}
 % リンク
 \usepackage{hyperref}
+% URL
+\usepackage{url}
 
 % タイトルのカスタマイズ
 \usepackage{titling}
@@ -23,7 +25,7 @@
 \author{作成者：山下倫宏
 \\ 学籍番号 : 03230524
 \\ 共同実験者 : 杉山月渚 渡辺健太 高橋一郎
-\\ 実験日 : 2023年月日
+\\ 実験日 : 2023年5月23日、25日
 \\ 作成日：\today}
 \preauthor{\begin{flushright}}
 \postauthor{\end{flushright}}
@@ -190,7 +192,11 @@ $V_{GS} \le 0.5\si{\volt}$の範囲では、
 $$9.24\frac{\si{\milli\ampere}}{\si{\volt}}$$
 となり、これはpn接合ダイオードの抵抗が
 およそ
-$$\frac{1}{9.24\frac{\si{\milli\ampere}}{\si{\volt}}} = 108\si{\ohm}$$
+
+\begin{equation}
+  \label{eq:eq2dash}
+  \frac{1}{9.24\frac{\si{\milli\ampere}}{\si{\volt}}} = 108\si{\ohm}
+\end{equation}
 であることが分かる。
 ここで、表\ref{table:resistancemilliAmpere}より
 電流計($10\si{\milli\ampere}$)の内部抵抗は
@@ -200,9 +206,109 @@ $4.5/108=0.0416 \ll 1$となり、
 この領域には測定系に起因する誤差は生じていないと
 みなせる。
 
-
 \subsection{pn接合ダイオードの電圧電流特性}
+実験テキスト\cite{text}の式(A1.5)に従うと、
+pn接合ダイオードに流れる電流$I$は、
+\begin{equation}
+  \label{eq:eq2}
+  I = I_{S} \left\{ \exp( qV/kT ) - 1 \right\}
+\end{equation}
+と表される。ここで、$I_{S}$は逆方向飽和電流、
+$q$は電子の電荷量、$V$はpn接合ダイオードの電圧、
+$k$はボルツマン定数、$T$は絶対温度である。
 
+ここで、絶対温度$T$について、
+goo天気\cite{weather}より、5月23日の最高気温の
+$14.3\si{\degreeCelsius}$を使用すると、
+$T = 287.45\si{\kelvin}$となる。
+よって
+\begin{equation}
+  \label{eq:eq3}
+  I = I_{S} \left\{ \exp( 39.4V ) - 1 \right\}
+\end{equation}
+となる。
+また、図\ref{fig:graph1}において、
+$V \ge 0.5[\si{\volt}]$のとき、
+$\exp( 39.4V ) \gg 1$となるため、
+電流$I$は
+\begin{equation}
+  \label{eq:eq4}
+  I \simeq I_{S} \exp( 39.4V )
+\end{equation}
+と近似できる。
+
+この時に、近似した式\ref{eq:eq4}において、
+さらに両辺の常用対数をとると、
+\begin{equation}
+  \label{eq:eq5}
+  \log_{10} (I) = \log_{10} (I_{S}) + (39.4log_{10} e) V
+\end{equation}
+となる。この式を用いて、図\ref{fig:graph1}において
+補正後の値のプロットに対して、
+フィッティングを行ったものを図\ref{fig:graph3}に示す。
+% 一枚の図
+\begin{figure}[tb]
+  \centering
+  \includegraphics[keepaspectratio,width=0.65\columnwidth]
+  {fig/fig5.png}
+  \caption[]{pn接合ダイオードの電圧電流特性に対するフィッティング}
+  \label{fig:graph3}
+\end{figure}
+図\ref{fig:graph3}では、電流計の測定レンジが
+$30\si{\micro\ampere}$の時のデータに対して、
+最小二乗法を用いて、式\ref{eq:eq5}のフィッティングを行った。
+なぜ用いたデータが$30\si{\micro\ampere}$の時のデータなのかというと、
+ほかのデータの範囲ではフィッティングが成功せず、
+一部分でもフィットするようなデータを探したところ、
+$30\si{\micro\ampere}$の時のデータがフィッティングに成功したからである。
+またフィッティングの結果、逆方向飽和電流$I_{S}$は
+$$I_{S} = \num{2.37e-15} [\si{\ampere}]$$
+とわかった。
+
+図\ref{fig:graph3}より、
+$V_{GS} \ge 0.[6\si{\volt}]$の範囲では、
+測定値が理論値から大きくズレていることが分かる。
+これは、電子デバイスの基礎と応用という本\cite{book1}によると、
+実際のpn接合ダイオードでは
+欠陥準位によるキャリアの再結合が起こるため、
+式\ref{eq:eq2}に示した$V$の係数が
+$q/{kT}$ではなく、$q/{\eta kT}$として表される。
+ここでの$\eta$は理想定数と呼ばれ$1 < \eta < 2$であり、再結合の起こりやすさ
+を示す定数となっている。$\eta$が$1$に近いほど理想的なダイオードとなっている。
+
+よって、図\ref{fig:graph1}において、測定レンジが
+$10\si{\milli\ampere}$の時のデータに対して、
+最小二乗法を用いて線形回帰を行った結果を
+図\ref{fig:graph4}に示す。
+% 一枚の図
+\begin{figure}[tb]
+  \centering
+  \includegraphics[keepaspectratio,width=0.65\columnwidth]
+  {fig/fig6.png}
+  \caption[]{線形回帰の結果}
+  \label{fig:graph4}
+\end{figure}
+図\ref{fig:graph4}より、この補助線の傾きは
+$$0.942 [dec/V]$$
+となるので、式\ref{eq:eq4}は、
+\begin{equation}
+  \label{eq:eq6}
+  I \simeq I_{S} \exp( 2.17V )
+\end{equation}
+と今回表せる。
+この時理想係数$\eta$は
+$$\eta = 39.4 / 2.17 = 18.2$$
+となる。
+
+本来この理想係数を計算すべきだったのは、
+電流計の測定レンジが$10\si{\milli\ampere}$の時の
+データであったと推測される。
+
+そもそも式\ref{eq:eq2dash}において、pn接合ダイオードの
+高電圧領域における抵抗成分を$108 \si{\ohm}$と見積もっている。
+図\ref{fig:graph2}において、線形目盛で線形近似が
+成り立っていることが分かるので、この高電圧領域は、
+接合部以外の寄生抵抗成分が支配的であると考えられる。
 
 \subsection{FETの静特性}
 
